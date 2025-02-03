@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Name = new TextBox();
+            InstanceName = new TextBox();
             Description = new TextBox();
             label1 = new Label();
             label2 = new Label();
@@ -41,14 +41,14 @@
             CancelButton = new Button();
             SuspendLayout();
             // 
-            // Name
+            // InstanceName
             // 
-            Name.BackColor = SystemColors.WindowFrame;
-            Name.ForeColor = SystemColors.Window;
-            Name.Location = new Point(12, 32);
-            Name.Name = "Name";
-            Name.Size = new Size(357, 23);
-            Name.TabIndex = 0;
+            InstanceName.BackColor = SystemColors.WindowFrame;
+            InstanceName.ForeColor = SystemColors.Window;
+            InstanceName.Location = new Point(12, 32);
+            InstanceName.Name = "InstanceName";
+            InstanceName.Size = new Size(357, 23);
+            InstanceName.TabIndex = 0;
             // 
             // Description
             // 
@@ -137,6 +137,7 @@
             Save.TabIndex = 9;
             Save.Text = "Save";
             Save.UseVisualStyleBackColor = true;
+            Save.Click += Save_Click;
             // 
             // CancelButton
             // 
@@ -147,6 +148,7 @@
             CancelButton.TabIndex = 10;
             CancelButton.Text = "Cancel";
             CancelButton.UseVisualStyleBackColor = true;
+            CancelButton.Click += CancelButton_Click;
             // 
             // InstanceEditor
             // 
@@ -164,11 +166,12 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(Description);
-            Controls.Add(Name);
+            Controls.Add(InstanceName);
             ForeColor = SystemColors.Control;
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
-            Text = "InstanceEditor";
+            Name = "InstanceEditor";
+            Text = "Instance Editor";
             Load += InstanceEditor_Load;
             ResumeLayout(false);
             PerformLayout();
@@ -176,7 +179,7 @@
 
         #endregion
 
-        private TextBox Name;
+        private TextBox InstanceName;
         private TextBox Description;
         private Label label1;
         private Label label2;

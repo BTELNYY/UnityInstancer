@@ -92,6 +92,7 @@
             NewButton.TabIndex = 4;
             NewButton.Text = "New...";
             NewButton.UseVisualStyleBackColor = false;
+            NewButton.Click += NewButton_Click;
             // 
             // EditButton
             // 
@@ -117,6 +118,7 @@
             DeleteButton.TabIndex = 6;
             DeleteButton.Text = "Delete";
             DeleteButton.UseVisualStyleBackColor = false;
+            DeleteButton.Click += DeleteButton_Click;
             // 
             // LaunchButton
             // 
@@ -140,6 +142,7 @@
             CloseButton.TabIndex = 8;
             CloseButton.Text = "Close";
             CloseButton.UseVisualStyleBackColor = false;
+            CloseButton.Click += CloseButton_Click;
             // 
             // MainForm
             // 

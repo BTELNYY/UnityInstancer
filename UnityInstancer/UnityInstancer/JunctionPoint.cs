@@ -190,12 +190,12 @@ namespace UnityInstancer
             IntPtr hTemplateFile);
 
         /// <summary>
-        /// Creates a junction point from the specified directory to the specified target directory.
+        /// Creates a junction point from the specified directory to the specified Target directory.
         /// </summary>
         /// <remarks>
         /// Only works on NTFS.
         /// </remarks>
-        /// <param name="targetDir">The target directory to create</param>
+        /// <param name="targetDir">The Target directory to create</param>
         /// <param name="sourceDir">The source directory to alias</param>
         /// <param name="overwrite">If true overwrites an existing reparse point or empty directory</param>
         /// <exception cref="IOException">Thrown when the junction point could not be created or when
@@ -323,13 +323,13 @@ namespace UnityInstancer
         }
 
         /// <summary>
-        /// Gets the target of the specified junction point.
+        /// Gets the Target of the specified junction point.
         /// </summary>
         /// <remarks>
         /// Only works on NTFS.
         /// </remarks>
         /// <param name="junctionPoint">The junction point path</param>
-        /// <returns>The target of the junction point</returns>
+        /// <returns>The Target of the junction point</returns>
         /// <exception cref="IOException">Thrown when the specified path does not
         /// exist, is invalid, is not a junction point, or some other error occurs</exception>
         public static string GetTarget(string junctionPoint)

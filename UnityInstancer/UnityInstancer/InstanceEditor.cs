@@ -12,29 +12,57 @@ namespace UnityInstancer
 {
     public partial class InstanceEditor : Form
     {
-        Instance target;
+        public Instance? Target;
 
-        int index;
+        public int Index = -1;
+
+        public bool DoSave = false;
 
         public InstanceEditor(int targetIndex)
         {
             InitializeComponent();
-            target = Program.Instances[targetIndex];
+            Target = InstanceManager.Instances[targetIndex];
         }
 
         public InstanceEditor()
         {
             InitializeComponent();
-            target = new Instance();
         }
 
         private void InstanceEditor_Load(object sender, EventArgs e)
         {
-            Name.Text = target.Name;
-            Description.Text = target.Name;
-            foreach(string argument in  target.Arguments)
+            if (Target != null)
             {
-                Arguments.Items.Add(argument);
+                InstanceName.Text = Target.Name;
+                Description.Text = Target.Name;
+                foreach (string argument in Target.Arguments)
+                {
+                    Arguments.Items.Add(argument);
+                }
+            }
+            else
+            {
+                InstanceName.Text = Guid.NewGuid().ToString();
+                Description.Text = "A new instance.";
+            }
+        }
+
+        private void CancelButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void Save_Click(object sender, EventArgs e)
+        {
+            Target = new Instance()
+            {
+                Name = InstanceName.Text,
+                Description = Description.Text,
+                Arguments = Arguments.Items.Cast<string>().ToList()
+            };
+            if(!DoSave && Target != null)
+            {
+                InstanceManager.CreateInstance(Target);
             }
         }
     }

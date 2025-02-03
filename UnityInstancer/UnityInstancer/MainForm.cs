@@ -9,7 +9,7 @@ namespace UnityInstancer
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            string dir = Path.Combine(Program.GamePath);
+            string dir = Path.Combine(InstanceManager.GamePath);
             foreach (string file in Directory.GetFiles(dir))
             {
                 if (Directory.Exists(Path.GetFileNameWithoutExtension(file) + "_Data"))
@@ -19,7 +19,7 @@ namespace UnityInstancer
                 }
             }
 
-            foreach (Instance instance in Program.Instances)
+            foreach (Instance instance in InstanceManager.Instances)
             {
                 Instances.Items.Add(instance.Name);
             }
@@ -52,27 +52,62 @@ namespace UnityInstancer
             {
                 return;
             }
-            Instance instance = Program.Instances[Instances.SelectedIndex];
-
+            Instance instance = InstanceManager.Instances[Instances.SelectedIndex];
+            InstanceEditor editor = new InstanceEditor(Instances.SelectedIndex);
+            editor.Show();
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string? file = Utility.OpenFileDialog(Program.TargetDir, "Exe files (*.exe)|*.exe");
-            if(file == null)
+            string? file = Utility.OpenFileDialog(InstanceManager.TargetDir, "Exe files (*.exe)|*.exe");
+            if (file == null)
             {
                 return;
             }
             string? dir = Path.GetDirectoryName(file);
-            if(dir == null)
+            if (dir == null)
             {
                 return;
             }
-            
-            foreach (Instance instance in Program.Instances)
+            bool found = false;
+            foreach (string subFile in Directory.GetFiles(dir))
+            {
+                if (Directory.Exists(Path.GetFileNameWithoutExtension(subFile) + "_Data"))
+                {
+                    //Unity game?
+                    this.ExePath.Text = subFile;
+                    found = true;
+                }
+            }
+            if (!found)
+            {
+                Utility.ShowMessageBox("Couldn't find a unity game within that folder.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            InstanceManager.LoadInstances();
+
+
+            foreach (Instance instance in InstanceManager.Instances)
             {
                 Instances.Items.Add(instance.Name);
             }
+        }
+
+        private void NewButton_Click(object sender, EventArgs e)
+        {
+            InstanceEditor editor = new InstanceEditor();
+            editor.ShowDialog();
+        }
+
+        private void CloseButton_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void DeleteButton_Click(object sender, EventArgs e)
+        {
+            InstanceManager.Delete(Instances.SelectedIndex);
         }
     }
 }
