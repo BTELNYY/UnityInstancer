@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +68,14 @@ namespace UnityInstancer
         public static void Delete(int index)
         {
             Instance instance = Instances[index];
-            Directory.Delete(instance.FolderPath, true);
+            try
+            {
+                Directory.Delete(instance.FolderPath, true);
+            }
+            catch(Exception ex)
+            {
+
+            }
             InstancesChanged?.Invoke();
         }
 
@@ -104,20 +112,27 @@ namespace UnityInstancer
             
             foreach(string dir in Directory.GetDirectories(GamePath))
             {
+                string dirName = dir.Split(Path.DirectorySeparatorChar).Last();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.
-                if (Path.GetDirectoryName(dir) != null && Path.GetDirectoryName(dir).Contains("_Data"))
+                if (dirName.Contains("_Data"))
                 {
 #pragma warning disable CS8604 // Possible null reference argument.
-                    Console.WriteLine(Path.Combine(TargetDir, dir.Replace(Path.GetDirectoryName(dir), instance.Name + "_Data")));
-                    JunctionPoint.Create(dir, Path.Combine(TargetDir, dir.Replace(Path.GetDirectoryName(dir), instance.Name + "_Data")), true);
+                    JunctionPoint.Create(dir, Path.Combine(targetPath, dirName.Replace(dirName, instance.Name + "_Data")), true);
                     continue;
 #pragma warning restore CS8604 // Possible null reference argument.
                 }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
 #pragma warning disable CS8604 // Possible null reference argument.
-                JunctionPoint.Create(dir, Path.Combine(targetPath, Path.GetDirectoryName(dir)), true);
+                JunctionPoint.Create(dir, Path.Combine(targetPath, dirName), true);
 #pragma warning restore CS8604 // Possible null reference argument.
             }
+
+            File.Delete(Path.Join(targetPath, "Instance.json"));
+            string json = JsonConvert.SerializeObject(instance, Formatting.Indented);
+            File.WriteAllText(Path.Join(targetPath, "Instance.json"), json);
+            instance.FolderPath = targetPath;
+            Instances.Add(instance);
+            InstancesChanged?.Invoke();
         }
     }
 }

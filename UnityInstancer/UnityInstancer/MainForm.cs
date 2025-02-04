@@ -98,6 +98,8 @@ namespace UnityInstancer
         {
             InstanceEditor editor = new InstanceEditor();
             editor.ShowDialog();
+            InstanceManager.LoadInstances();
+            Invalidate();
         }
 
         private void CloseButton_Click(object sender, EventArgs e)
