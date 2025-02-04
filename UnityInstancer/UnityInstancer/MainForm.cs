@@ -7,10 +7,11 @@ namespace UnityInstancer
             InitializeComponent();
         }
 
-        private void MainForm_Load(object sender, EventArgs e)
+        private void DiscoverInstances()
         {
-            string dir = Path.Combine(InstanceManager.GamePath);
-            foreach (string file in Directory.GetFiles(dir))
+            Instances.Items.Clear();
+            InstanceManager.LoadInstances();
+            foreach (string file in Directory.GetFiles(InstanceManager.GamePath))
             {
                 if (Directory.Exists(Path.GetFileNameWithoutExtension(file) + "_Data"))
                 {
@@ -18,11 +19,15 @@ namespace UnityInstancer
                     this.ExePath.Text = file;
                 }
             }
-
             foreach (Instance instance in InstanceManager.Instances)
             {
                 Instances.Items.Add(instance.Name);
             }
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            DiscoverInstances();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -55,6 +60,8 @@ namespace UnityInstancer
             Instance instance = InstanceManager.Instances[Instances.SelectedIndex];
             InstanceEditor editor = new InstanceEditor(Instances.SelectedIndex);
             editor.Show();
+            DiscoverInstances();
+            Invalidate();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -99,6 +106,7 @@ namespace UnityInstancer
             InstanceEditor editor = new InstanceEditor();
             editor.ShowDialog();
             InstanceManager.LoadInstances();
+            DiscoverInstances();
             Invalidate();
         }
 
@@ -110,6 +118,8 @@ namespace UnityInstancer
         private void DeleteButton_Click(object sender, EventArgs e)
         {
             InstanceManager.Delete(Instances.SelectedIndex);
+            DiscoverInstances();
+            Invalidate();
         }
     }
 }

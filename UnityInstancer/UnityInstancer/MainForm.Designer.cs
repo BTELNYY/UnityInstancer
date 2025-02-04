@@ -99,7 +99,7 @@
             EditButton.BackColor = SystemColors.Control;
             EditButton.Enabled = false;
             EditButton.ForeColor = SystemColors.ControlText;
-            EditButton.Location = new Point(282, 137);
+            EditButton.Location = new Point(282, 235);
             EditButton.Name = "EditButton";
             EditButton.Size = new Size(57, 23);
             EditButton.TabIndex = 5;
@@ -112,7 +112,7 @@
             DeleteButton.BackColor = SystemColors.Control;
             DeleteButton.Enabled = false;
             DeleteButton.ForeColor = SystemColors.ControlText;
-            DeleteButton.Location = new Point(282, 157);
+            DeleteButton.Location = new Point(282, 264);
             DeleteButton.Name = "DeleteButton";
             DeleteButton.Size = new Size(57, 23);
             DeleteButton.TabIndex = 6;
@@ -125,7 +125,7 @@
             LaunchButton.BackColor = SystemColors.Control;
             LaunchButton.Enabled = false;
             LaunchButton.ForeColor = SystemColors.ControlText;
-            LaunchButton.Location = new Point(287, 293);
+            LaunchButton.Location = new Point(282, 293);
             LaunchButton.Name = "LaunchButton";
             LaunchButton.Size = new Size(57, 23);
             LaunchButton.TabIndex = 7;

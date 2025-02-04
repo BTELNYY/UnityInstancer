@@ -22,6 +22,8 @@ namespace UnityInstancer
         {
             InitializeComponent();
             Target = InstanceManager.Instances[targetIndex];
+            Index = targetIndex;
+            DoSave = true;
         }
 
         public InstanceEditor()
@@ -34,7 +36,7 @@ namespace UnityInstancer
             if (Target != null)
             {
                 InstanceName.Text = Target.Name;
-                Description.Text = Target.Name;
+                Description.Text = Target.Description;
                 foreach (string argument in Target.Arguments)
                 {
                     Arguments.Items.Add(argument);
@@ -63,6 +65,10 @@ namespace UnityInstancer
             if(!DoSave && Target != null)
             {
                 InstanceManager.CreateInstance(Target);
+            }
+            if(DoSave && Target != null)
+            {
+                InstanceManager.EditInstance(Index, Target);
             }
             Close();
         }
