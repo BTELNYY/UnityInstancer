@@ -34,9 +34,9 @@
             label2 = new Label();
             Arguments = new ListBox();
             label3 = new Label();
-            AddArgs = new Button();
-            RemoveArgs = new Button();
-            EditArgs = new Button();
+            btnAddArgs = new Button();
+            btnRemoveArgs = new Button();
+            btnEditArgs = new Button();
             Save = new Button();
             CancelButton = new Button();
             SuspendLayout();
@@ -88,6 +88,7 @@
             Arguments.Name = "Arguments";
             Arguments.Size = new Size(276, 139);
             Arguments.TabIndex = 4;
+            Arguments.SelectedIndexChanged += Arguments_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -98,35 +99,40 @@
             label3.TabIndex = 5;
             label3.Text = "Arguments";
             // 
-            // AddArgs
+            // btnAddArgs
             // 
-            AddArgs.ForeColor = SystemColors.ControlText;
-            AddArgs.Location = new Point(294, 230);
-            AddArgs.Name = "AddArgs";
-            AddArgs.Size = new Size(75, 23);
-            AddArgs.TabIndex = 6;
-            AddArgs.Text = "Add";
-            AddArgs.UseVisualStyleBackColor = true;
+            btnAddArgs.ForeColor = SystemColors.ControlText;
+            btnAddArgs.Location = new Point(294, 230);
+            btnAddArgs.Name = "btnAddArgs";
+            btnAddArgs.Size = new Size(75, 23);
+            btnAddArgs.TabIndex = 6;
+            btnAddArgs.Text = "Add";
+            btnAddArgs.UseVisualStyleBackColor = true;
+            btnAddArgs.Click += AddArgs_Click;
             // 
-            // RemoveArgs
+            // btnRemoveArgs
             // 
-            RemoveArgs.ForeColor = SystemColors.ControlText;
-            RemoveArgs.Location = new Point(294, 288);
-            RemoveArgs.Name = "RemoveArgs";
-            RemoveArgs.Size = new Size(75, 23);
-            RemoveArgs.TabIndex = 7;
-            RemoveArgs.Text = "Remove";
-            RemoveArgs.UseVisualStyleBackColor = true;
+            btnRemoveArgs.Enabled = false;
+            btnRemoveArgs.ForeColor = SystemColors.ControlText;
+            btnRemoveArgs.Location = new Point(294, 288);
+            btnRemoveArgs.Name = "btnRemoveArgs";
+            btnRemoveArgs.Size = new Size(75, 23);
+            btnRemoveArgs.TabIndex = 7;
+            btnRemoveArgs.Text = "Remove";
+            btnRemoveArgs.UseVisualStyleBackColor = true;
+            btnRemoveArgs.Click += btnRemoveArgs_Click;
             // 
-            // EditArgs
+            // btnEditArgs
             // 
-            EditArgs.ForeColor = SystemColors.ControlText;
-            EditArgs.Location = new Point(294, 259);
-            EditArgs.Name = "EditArgs";
-            EditArgs.Size = new Size(75, 23);
-            EditArgs.TabIndex = 8;
-            EditArgs.Text = "Edit";
-            EditArgs.UseVisualStyleBackColor = true;
+            btnEditArgs.Enabled = false;
+            btnEditArgs.ForeColor = SystemColors.ControlText;
+            btnEditArgs.Location = new Point(294, 259);
+            btnEditArgs.Name = "btnEditArgs";
+            btnEditArgs.Size = new Size(75, 23);
+            btnEditArgs.TabIndex = 8;
+            btnEditArgs.Text = "Edit";
+            btnEditArgs.UseVisualStyleBackColor = true;
+            btnEditArgs.Click += btnEditArgs_Click;
             // 
             // Save
             // 
@@ -158,9 +164,9 @@
             ClientSize = new Size(392, 420);
             Controls.Add(CancelButton);
             Controls.Add(Save);
-            Controls.Add(EditArgs);
-            Controls.Add(RemoveArgs);
-            Controls.Add(AddArgs);
+            Controls.Add(btnEditArgs);
+            Controls.Add(btnRemoveArgs);
+            Controls.Add(btnAddArgs);
             Controls.Add(label3);
             Controls.Add(Arguments);
             Controls.Add(label2);
@@ -185,9 +191,9 @@
         private Label label2;
         private ListBox Arguments;
         private Label label3;
-        private Button AddArgs;
-        private Button RemoveArgs;
-        private Button EditArgs;
+        private Button btnAddArgs;
+        private Button btnRemoveArgs;
+        private Button btnEditArgs;
         private Button Save;
         private Button CancelButton;
     }

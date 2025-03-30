@@ -1,12 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Policy;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace UnityInstancer
 {
@@ -26,7 +19,7 @@ namespace UnityInstancer
             }
         }
 
-        public static List<Instance> Instances = new List<Instance>();
+        public static List<Instance> Instances = new();
 
         public static void LoadInstances()
         {
@@ -58,6 +51,7 @@ namespace UnityInstancer
                     else
                     {
                         DebugConsole.WriteLineColor("Unable to find an instance config. Dir: " + dir, ConsoleColor.Red);
+                        //Directory.Delete(path, true);
                         continue;
                     }
                 }
@@ -72,11 +66,29 @@ namespace UnityInstancer
             {
                 Directory.Delete(instance.FolderPath, true);
             }
-            catch(Exception ex)
+            catch (Exception)
             {
 
             }
             InstancesChanged?.Invoke();
+        }
+
+        public static void LaunchInstance(int index)
+        {
+            Instance instance = Instances[index];
+            string exePath = Path.Combine(instance.FolderPath, $"{instance.Name}.exe");
+            Process.Start(exePath);
+        }
+
+        public static bool LaunchInstance(string name)
+        {
+            int instance = Instances.FindIndex(x => x.Name == name);
+            if (instance == -1)
+            {
+                return false;
+            }
+            LaunchInstance(instance);
+            return true;
         }
 
         public static void EditInstance(int index, Instance instance)
@@ -94,10 +106,14 @@ namespace UnityInstancer
             string targetPath = Path.Combine(TargetDir, instance.Name);
             Directory.CreateDirectory(targetPath);
             string gameExeName = string.Empty;
-            foreach(string item in Directory.GetFiles(InstanceManager.GamePath))
+            foreach (string item in Directory.GetFiles(InstanceManager.GamePath))
             {
                 string filename = Path.GetFileName(item);
-                if(filename == AppDomain.CurrentDomain.FriendlyName)
+                if (filename == AppDomain.CurrentDomain.FriendlyName)
+                {
+                    continue;
+                }
+                if (filename.Contains("UnityInstancer"))
                 {
                     continue;
                 }
@@ -109,8 +125,8 @@ namespace UnityInstancer
                 }
                 File.Copy(item, Path.Combine(targetPath, filename));
             }
-            
-            foreach(string dir in Directory.GetDirectories(GamePath))
+
+            foreach (string dir in Directory.GetDirectories(GamePath))
             {
                 string dirName = dir.Split(Path.DirectorySeparatorChar).Last();
 #pragma warning disable CS8602 // Dereference of a possibly null reference.

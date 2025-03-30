@@ -58,7 +58,7 @@ namespace UnityInstancer
                 return;
             }
             Instance instance = InstanceManager.Instances[Instances.SelectedIndex];
-            InstanceEditor editor = new InstanceEditor(Instances.SelectedIndex);
+            InstanceEditor editor = new(Instances.SelectedIndex);
             editor.Show();
             DiscoverInstances();
             Invalidate();
@@ -103,7 +103,7 @@ namespace UnityInstancer
 
         private void NewButton_Click(object sender, EventArgs e)
         {
-            InstanceEditor editor = new InstanceEditor();
+            InstanceEditor editor = new();
             editor.ShowDialog();
             InstanceManager.LoadInstances();
             DiscoverInstances();
@@ -120,6 +120,11 @@ namespace UnityInstancer
             InstanceManager.Delete(Instances.SelectedIndex);
             DiscoverInstances();
             Invalidate();
+        }
+
+        private void LaunchButton_Click(object sender, EventArgs e)
+        {
+            InstanceManager.LaunchInstance(Instances.SelectedIndex);
         }
     }
 }

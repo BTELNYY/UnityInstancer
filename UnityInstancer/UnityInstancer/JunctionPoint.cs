@@ -1,10 +1,6 @@
 ﻿using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace UnityInstancer
 {
@@ -216,7 +212,7 @@ namespace UnityInstancer
             {
                 byte[] sourceDirBytes = Encoding.Unicode.GetBytes(NonInterpretedPathPrefix + Path.GetFullPath(sourceDir));
 
-                REPARSE_DATA_BUFFER reparseDataBuffer = new REPARSE_DATA_BUFFER();
+                REPARSE_DATA_BUFFER reparseDataBuffer = new();
 
                 reparseDataBuffer.ReparseTag = IO_REPARSE_TAG_MOUNT_POINT;
                 reparseDataBuffer.ReparseDataLength = (ushort)(sourceDirBytes.Length + 12);
@@ -268,7 +264,7 @@ namespace UnityInstancer
 
             using (SafeFileHandle handle = OpenReparsePoint(junctionPoint, EFileAccess.GenericWrite))
             {
-                REPARSE_DATA_BUFFER reparseDataBuffer = new REPARSE_DATA_BUFFER();
+                REPARSE_DATA_BUFFER reparseDataBuffer = new();
 
                 reparseDataBuffer.ReparseTag = IO_REPARSE_TAG_MOUNT_POINT;
                 reparseDataBuffer.ReparseDataLength = 0;
@@ -387,7 +383,7 @@ namespace UnityInstancer
 
         private static SafeFileHandle OpenReparsePoint(string reparsePoint, EFileAccess accessMode)
         {
-            SafeFileHandle reparsePointHandle = new SafeFileHandle(CreateFile(reparsePoint, accessMode,
+            SafeFileHandle reparsePointHandle = new(CreateFile(reparsePoint, accessMode,
                 EFileShare.Read | EFileShare.Write | EFileShare.Delete,
                 IntPtr.Zero, ECreationDisposition.OpenExisting,
                 EFileAttributes.BackupSemantics | EFileAttributes.OpenReparsePoint, IntPtr.Zero), true);

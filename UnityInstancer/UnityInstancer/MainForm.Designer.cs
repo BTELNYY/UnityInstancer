@@ -131,6 +131,7 @@
             LaunchButton.TabIndex = 7;
             LaunchButton.Text = "Launch";
             LaunchButton.UseVisualStyleBackColor = false;
+            LaunchButton.Click += LaunchButton_Click;
             // 
             // CloseButton
             // 

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Data;
 
 namespace UnityInstancer
 {
@@ -62,15 +54,60 @@ namespace UnityInstancer
                 Description = Description.Text,
                 Arguments = Arguments.Items.Cast<string>().ToList()
             };
-            if(!DoSave && Target != null)
+            if (!DoSave && Target != null)
             {
                 InstanceManager.CreateInstance(Target);
             }
-            if(DoSave && Target != null)
+            if (DoSave && Target != null)
             {
                 InstanceManager.EditInstance(Index, Target);
             }
             Close();
+        }
+
+        private void AddArgs_Click(object sender, EventArgs e)
+        {
+            EnterValue value = new();
+            value.lblDescription.Text = "Enter a new argument";
+            DialogResult result = value.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Arguments.Items.Add(value.txtValue.Text);
+            }
+        }
+
+        private void Arguments_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnEditArgs.Enabled = true;
+            btnRemoveArgs.Enabled = true;
+        }
+
+        private void btnEditArgs_Click(object sender, EventArgs e)
+        {
+            int index = Arguments.SelectedIndex;
+            string? currentValue = Arguments.Items[index].ToString();
+            if (string.IsNullOrEmpty(currentValue))
+            {
+                currentValue = "";
+            }
+            EnterValue value = new();
+            value.lblDescription.Text = "Edit Argument";
+            value.txtValue.Text = currentValue;
+            DialogResult result = value.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                Arguments.Items[index] = value.txtValue.Text;
+            }
+        }
+
+        private void btnRemoveArgs_Click(object sender, EventArgs e)
+        {
+            Arguments.Items.RemoveAt(Arguments.SelectedIndex);
+            if (Arguments.Items.Count == 0)
+            {
+                btnRemoveArgs.Enabled = false;
+                btnEditArgs.Enabled = false;
+            }
         }
     }
 }

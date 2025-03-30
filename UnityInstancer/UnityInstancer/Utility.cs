@@ -1,11 +1,4 @@
-﻿using Microsoft.VisualBasic.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace UnityInstancer
+﻿namespace UnityInstancer
 {
     public class Utility
     {
@@ -18,7 +11,7 @@ namespace UnityInstancer
         {
             try //try to run this code, on error break and show the error.
             {
-                using (OpenFileDialog openFileDialog = new OpenFileDialog())
+                using (OpenFileDialog openFileDialog = new())
                 {
                     //sets info about our file dialog.
                     openFileDialog.InitialDirectory = @path;
@@ -38,7 +31,7 @@ namespace UnityInstancer
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return null;
             }
