@@ -57,6 +57,36 @@ namespace UnityInstancer
                         return false;
                     }
                     break;
+                case "--delete":
+                    string deletetarget = input[0];
+                    input.RemoveAt(0);
+                    int index = InstanceManager.FindInstance(deletetarget);
+                    if(index == -1)
+                    {
+                        MessageBox.Show($"No such instance '{deletetarget}'.", "Error", buttons: MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return false;
+                    }
+                    else
+                    {
+                        InstanceManager.Delete(index);                    
+                    }
+                    break;
+                case "--create":
+                    string name = input[0];
+                    input.RemoveAt(0);
+                    string description = input[0];
+                    input.RemoveAt(0);
+                    string args = input[0];
+                    input.RemoveAt(0);
+                    List<string> arguments = args.Split("|").ToList();
+                    Instance instance = new Instance()
+                    {
+                        Name = name,
+                        Description = description,
+                        Arguments = arguments,
+                    };
+                    InstanceManager.CreateInstance(instance);
+                    break;
                 default:
                     MessageBox.Show("Unknown command: " + command, "Error", buttons: MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;

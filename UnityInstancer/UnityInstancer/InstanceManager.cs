@@ -91,6 +91,11 @@ namespace UnityInstancer
             return true;
         }
 
+        public static int FindInstance(string name)
+        {
+            return Instances.FindIndex(x => x.Name == name);
+        }
+
         public static void EditInstance(int index, Instance instance)
         {
             File.Delete(Path.Join(instance.FolderPath, "Instance.json"));
